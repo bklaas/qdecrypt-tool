@@ -8,11 +8,11 @@ from treelib import Node, Tree
 class QTree(object):
     def __init__(self, ref_file):
         self.ref_file = ref_file
-        self.decrypt = defaultdict(lambda: "???")
+        self.qexpand = defaultdict(lambda: "???")
         with open(self.ref_file, "r") as csvf:
             r = csv.DictReader(csvf)
             for row in r:
-                self.decrypt[row["stub"]] = row["desc"]
+                self.qexpand[row["stub"]] = row["desc"]
 
     def _create_tree(self, acronym):
         acronym = acronym.upper()
@@ -23,14 +23,14 @@ class QTree(object):
         qtree.create_node(acronym, 1)
         for idx, x in enumerate(acronym, start=1):
             substr = acronym[0:idx]
-            qtree.create_node(f"{substr}: {self.decrypt[substr]}", idx + 1, parent=idx)
+            qtree.create_node(f"{substr}: {self.qexpand[substr]}", idx + 1, parent=idx)
         return qtree
 
     def show_tree(self, acronym):
         """display a full tree of information about a TTS Org acronym.
 
         Args:
-            acronym (string): a TTS org chart acronym to decrypt
+            acronym (string): a TTS org chart acronym to expand
 
         Raises:
             KeyError: if string doesn't start with a Q or q
@@ -41,7 +41,7 @@ class QTree(object):
         self._create_tree(acronym).show()
 
 
-def main(acronym, ref_file="qdecrypt.csv"):
+def main(acronym, ref_file="qexpand.csv"):
     qtree = QTree(ref_file)
     qtree.show_tree(acronym)
 

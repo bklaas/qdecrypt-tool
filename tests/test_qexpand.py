@@ -1,15 +1,15 @@
 import json
 import pytest
-from qdecrypt import *
+from qexpand import *
 
 
 @pytest.fixture(scope="module", autouse=True)
 def my_qtree():
-    return QTree(ref_file="tests/reference_files/qdecrypt.csv")
+    return QTree(ref_file="tests/reference_files/qexpand.csv")
 
 
 def test_ref_file(my_qtree):
-    assert my_qtree.ref_file == "tests/reference_files/qdecrypt.csv"
+    assert my_qtree.ref_file == "tests/reference_files/qexpand.csv"
 
 
 def test_create_tree(my_qtree):
